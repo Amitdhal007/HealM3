@@ -28,7 +28,7 @@ struct PasswordView: View {
                 
                 Spacer()
 
-                VStack {
+                VStack(spacing: 12) {
                     TxtField(text: $password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
                     TxtField(text: $confirmPassword, placeholder: "Confirm password", cornerRadius: 15, isSecure: true)
                 }

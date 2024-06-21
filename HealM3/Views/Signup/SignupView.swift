@@ -9,12 +9,10 @@ import SwiftUI
 
 struct SignupView: View {
     
-    @State private var email: String = ""
-    @State private var name: String = ""
-    @State private var mobileNum: String = ""
+    @StateObject private var viewModel = SignInEmailViewModel()
     
     func isButtonDisabled() -> Bool {
-        return (email.isEmpty || !email.contains("gmail.com")) || name.isEmpty || mobileNum.count < 10
+        return (viewModel.email.isEmpty || !viewModel.email.contains("gmail.com")) || viewModel.name.isEmpty || viewModel.mobileNo.count < 10
     }
     
     var body: some View {
@@ -28,10 +26,10 @@ struct SignupView: View {
                 
                 Spacer()
                 
-                VStack {
-                    TxtField(text: $email, placeholder: "Enter your email", cornerRadius: 15, inputType: .email)
-                    TxtField(text: $name, placeholder: "Enter your name", cornerRadius: 15, inputType: .name)
-                    TxtField(text: $mobileNum, placeholder: "Enter mobile no.", cornerRadius: 15, inputType: .mobNo)
+                VStack(spacing: 12) {
+                    TxtField(text: $viewModel.email, placeholder: "Enter your email", cornerRadius: 15, inputType: .email)
+                    TxtField(text: $viewModel.name, placeholder: "Enter your name", cornerRadius: 15, inputType: .name)
+                    TxtField(text: $viewModel.mobileNo, placeholder: "Enter mobile no.", cornerRadius: 15, inputType: .mobNo)
                 }
                 
                 VStack {

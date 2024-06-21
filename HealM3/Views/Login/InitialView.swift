@@ -27,6 +27,7 @@ struct InitialLoginView: View {
                         
                         Text("One stop solution for Music")
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(Color(.systemGray))
                     }
                     .frame(maxWidth: .infinity)
                     

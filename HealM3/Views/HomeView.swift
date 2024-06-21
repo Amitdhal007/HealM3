@@ -28,7 +28,7 @@ struct HomeView: View {
                     
                     
                     LazyVGrid(columns: columns, spacing: 13) {
-                        ForEach(0..<8) { _ in
+                        ForEach(0..<4) { _ in
                             NavigationLink(destination: AlbumSongView()){
                                 AlbumCard()
                             }

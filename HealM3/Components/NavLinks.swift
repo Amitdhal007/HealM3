@@ -17,7 +17,7 @@ struct NavLink: View {
             .fontWeight(.bold)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
-            .frame(height: 55)
+            .frame(height: 66)
             .background(OrangeGradient)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }

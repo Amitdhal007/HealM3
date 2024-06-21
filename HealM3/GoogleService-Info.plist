@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB9rTeZQoYGqAS6ML9nmMqYXwKBFH-FJ_o</string>
+	<key>GCM_SENDER_ID</key>
+	<string>157426408790</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.asitkumar.HealM3</string>
+	<key>PROJECT_ID</key>
+	<string>healm3-ef0aa</string>
+	<key>STORAGE_BUCKET</key>
+	<string>healm3-ef0aa.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:157426408790:ios:3c5638c262f3470dc04af7</string>
+</dict>
+</plist>

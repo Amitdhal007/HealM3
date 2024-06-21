@@ -35,11 +35,12 @@ struct LoginView: View {
                     
                     Text("Please enter your details to continue")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(Color(.systemGray))
                 }
                 .frame(maxWidth: .infinity)
                 
                 
-                VStack {
+                VStack(spacing: 12) {
                     TxtField(text: $email, placeholder: "Enter E-mail", cornerRadius: 15, inputType: .email)
                     TxtField(text: $password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
                 }

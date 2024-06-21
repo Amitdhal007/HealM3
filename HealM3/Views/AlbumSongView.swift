@@ -11,6 +11,8 @@ struct AlbumSongView: View {
     
     @State private var searchText: String = ""
     @Environment(\.presentationMode) var presentationMode
+    @State private var isSongAddedPresent: Bool = false
+    @State private var isSongDetailPresent: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -24,6 +26,9 @@ struct AlbumSongView: View {
                     
                     ForEach (0..<7) { _ in
                         MusicCard()
+                            .onTapGesture {
+                                isSongDetailPresent = true
+                            }
                     }
                 }
                 .padding(EdgeInsets(top: 5, leading: 16, bottom: 16, trailing: 16))
@@ -32,12 +37,19 @@ struct AlbumSongView: View {
             .navigationTitle("Akshay's Playlist")
             .searchable(text: $searchText, prompt: "Search Song")
             .navigationBarItems(trailing: Button(action: {
-                //
+                isSongAddedPresent = true
             }){
                 Image(systemName: "plus")
                     .foregroundStyle(.orange1)
                     .fontWeight(.bold)
             })
+            .sheet(isPresented: $isSongAddedPresent, content: {
+                AddSongView()
+            })
+            .sheet(isPresented: $isSongDetailPresent, content: {
+                EachSongView()
+            })
+            .scrollIndicators(.hidden)
         }
     }
 }
