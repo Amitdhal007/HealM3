@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InitialLoginView: View {
+    
     var body: some View {
         NavigationStack {
             ScrollView {

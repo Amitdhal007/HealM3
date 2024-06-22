@@ -31,7 +31,6 @@
 		7E494F412C2576A600348190 /* EachSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F402C2576A600348190 /* EachSongView.swift */; };
 		7E494F432C257A4700348190 /* EachSongCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F422C257A4700348190 /* EachSongCard.swift */; };
 		7E494F452C25B5E600348190 /* DetaliLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F442C25B5E600348190 /* DetaliLabel.swift */; };
-		7E494F472C25E8D500348190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E494F462C25E8D500348190 /* GoogleService-Info.plist */; };
 		7E494F4A2C25EB8E00348190 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7E494F492C25EB8E00348190 /* FirebaseAnalytics */; };
 		7E494F4C2C25EB8E00348190 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E494F4B2C25EB8E00348190 /* FirebaseAnalyticsSwift */; };
 		7E494F4E2C25EB8E00348190 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7E494F4D2C25EB8E00348190 /* FirebaseAuth */; };
@@ -44,6 +43,8 @@
 		7E494F5C2C25F34B00348190 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F5B2C25F34B00348190 /* NetworkManager.swift */; };
 		7E494F5E2C26012B00348190 /* SignInEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F5D2C26012B00348190 /* SignInEmailVM.swift */; };
 		7E494F612C2602B400348190 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F602C2602B400348190 /* Responses.swift */; };
+		7E494F632C2627BA00348190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E494F622C2627BA00348190 /* GoogleService-Info.plist */; };
+		7E494F672C26A94100348190 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F662C26A94000348190 /* RootView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,10 +73,11 @@
 		7E494F402C2576A600348190 /* EachSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachSongView.swift; sourceTree = "<group>"; };
 		7E494F422C257A4700348190 /* EachSongCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachSongCard.swift; sourceTree = "<group>"; };
 		7E494F442C25B5E600348190 /* DetaliLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetaliLabel.swift; sourceTree = "<group>"; };
-		7E494F462C25E8D500348190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7E494F5B2C25F34B00348190 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7E494F5D2C26012B00348190 /* SignInEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInEmailVM.swift; sourceTree = "<group>"; };
 		7E494F602C2602B400348190 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
+		7E494F622C2627BA00348190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7E494F662C26A94000348190 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +126,7 @@
 				7E494F162C2074A700348190 /* Helpers */,
 				7E494F072C20740700348190 /* HealM3App.swift */,
 				7E494F092C20740700348190 /* ContentView.swift */,
-				7E494F462C25E8D500348190 /* GoogleService-Info.plist */,
+				7E494F622C2627BA00348190 /* GoogleService-Info.plist */,
 				7E494F0B2C20740800348190 /* Assets.xcassets */,
 				7E494F0D2C20740800348190 /* Preview Content */,
 			);
@@ -190,6 +192,7 @@
 				7E494F3C2C2416D100348190 /* AlbumSongView.swift */,
 				7E494F3E2C243A3B00348190 /* AddSongView.swift */,
 				7E494F402C2576A600348190 /* EachSongView.swift */,
+				7E494F662C26A94000348190 /* RootView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,7 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E494F0F2C20740800348190 /* Preview Assets.xcassets in Resources */,
-				7E494F472C25E8D500348190 /* GoogleService-Info.plist in Resources */,
+				7E494F632C2627BA00348190 /* GoogleService-Info.plist in Resources */,
 				7E494F0C2C20740800348190 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,6 +331,7 @@
 				7E494F452C25B5E600348190 /* DetaliLabel.swift in Sources */,
 				7E494F272C2095AD00348190 /* NavLinks.swift in Sources */,
 				7E494F082C20740700348190 /* HealM3App.swift in Sources */,
+				7E494F672C26A94100348190 /* RootView.swift in Sources */,
 				7E494F3B2C240AA000348190 /* MusicCard.swift in Sources */,
 				7E494F5E2C26012B00348190 /* SignInEmailVM.swift in Sources */,
 				7E494F212C2088BC00348190 /* BackgroundColor.swift in Sources */,

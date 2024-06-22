@@ -9,53 +9,60 @@ import SwiftUI
 
 struct PasswordView: View {
     
-    @State private var password: String = ""
-    @State private var confirmPassword: String = ""
+    @StateObject private var viewModel = SignInEmailViewModel.shared
+    
     
     func isButtonDisabled() -> Bool {
-        return (password.isEmpty || password.count < 8) || (confirmPassword.isEmpty || confirmPassword.count < 8) || password != confirmPassword
+        return viewModel.password.isEmpty || viewModel.confirmPassword.isEmpty || viewModel.password.count < 8 || viewModel.confirmPassword.count < 8 || viewModel.password != viewModel.confirmPassword
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: 24) {
-                
-                Spacer()
-                
-                Image(systemName: "music.note.list")
-                    .font(.system(size: 160))
-                    .foregroundColor(.orange1)
-                
-                Spacer()
-
-                VStack(spacing: 12) {
-                    TxtField(text: $password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
-                    TxtField(text: $confirmPassword, placeholder: "Confirm password", cornerRadius: 15, isSecure: true)
-                }
-                
-                VStack {
-                    Button(action: {
-                        // action
-                    }) {
-                        NavLink(text: "Signup", cornerRadius: 15)
-                    }
-                    .disabled(isButtonDisabled())
-                    .opacity(isButtonDisabled() ? 0.5 : 1)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .center, spacing: 24) {
                     
+                    Spacer()
+                    
+                    Image(systemName: "music.note.list")
+                        .font(.system(size: 160))
+                        .foregroundColor(.orange1)
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 12) {
+                        TxtField(text: $viewModel.password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
+                        TxtField(text: $viewModel.confirmPassword, placeholder: "Confirm password", cornerRadius: 15, isSecure: true)
+                    }
+                    
+                    VStack {
+                        Button(action: {
+                            viewModel.signIn { result in
+                                switch result {
+                                case .success(let userData):
+                                    print("Sign-up successful: \(userData)")
+                                case .failure(let error):
+                                    print("Sign-up error: \(error)")
+                                }
+                            }
+                        }) {
+                            NavLink(text: "Sign Up", cornerRadius: 15)
+                        }
+                        .disabled(isButtonDisabled())
+                        .opacity(isButtonDisabled() ? 0.5 : 1)
+                        
+                    }
                 }
+                .padding(EdgeInsets(top: 24, leading: 16, bottom: 16, trailing: 16))
             }
-            .padding(EdgeInsets(top: 24, leading: 16, bottom: 16, trailing: 16))
-        }
-        .scrollIndicators(.hidden)
-        .navigationTitle("Set password")
-        .onDisappear {
-            password = ""
-            confirmPassword = ""
+            .scrollIndicators(.hidden)
+            .navigationTitle("Set Password")
+            .onDisappear {
+                // Reset password fields when navigating away from this view
+                viewModel.password = ""
+                viewModel.confirmPassword = ""
+            }
         }
     }
 }
 
-#Preview {
-    PasswordView()
-}
 
