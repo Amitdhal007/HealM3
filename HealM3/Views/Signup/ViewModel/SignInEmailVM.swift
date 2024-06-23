@@ -59,7 +59,7 @@ final class SignInEmailViewModel: ObservableObject {
         }
         
         guard password == confirmPassword else {
-            print("Password and confirm password should match")
+            print("Passwords do not match")
             return false
         }
         
@@ -70,11 +70,6 @@ final class SignInEmailViewModel: ObservableObject {
         
         guard !mobileNo.isEmpty else {
             print("Mobile number should not be empty")
-            return false
-        }
-        
-        guard mobileNo.count == 10 else {
-            print("Mobile number should be exactly 10 digits long")
             return false
         }
         

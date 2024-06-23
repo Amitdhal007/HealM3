@@ -9,11 +9,21 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 
+class AppState: ObservableObject {
+    @Published var isAuthenticated: Bool = false
+}
+
 final class AuthenticationManager {
     
     static let shared = AuthenticationManager()
     private let firebaseManager = FirebaseManager.shared
+    private var appState: AppState? = nil
+    
     private init() {}
+    
+    func configure(appState: AppState) {
+        self.appState = appState
+    }
     
     func getAuthenticatedUser() throws -> AuthDataResponseModel {
         guard let user = Auth.auth().currentUser else {
@@ -28,10 +38,22 @@ final class AuthenticationManager {
         let userId = authDateResponse.user.uid
         firebaseManager.writeUserData(userId: userId, name: name, email: email, mobileNum: mobileNum)
         
+        // Update app state
+        DispatchQueue.main.async {
+            self.appState?.isAuthenticated = true
+        }
+        
         return AuthDataResponseModel.init(user: authDateResponse.user)
     }
+    
+    func signOut() throws {
+        try Auth.auth().signOut()
+        
+        DispatchQueue.main.async {
+            self.appState?.isAuthenticated = false
+        }
+    }
 }
-
 
 class FirebaseManager {
     static let shared = FirebaseManager()
@@ -50,5 +72,19 @@ class FirebaseManager {
         
         ref.child("users").child(userId).setValue(userData)
     }
-    
 }
+
+@MainActor
+final class ProfileViewModel: ObservableObject {
+    private let appState: AppState
+    
+    init(appState: AppState) {
+        self.appState = appState
+    }
+    
+    func signOut() throws {
+        try AuthenticationManager.shared.signOut()
+        appState.isAuthenticated = false
+    }
+}
+

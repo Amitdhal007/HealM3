@@ -46,12 +46,8 @@ struct WishlistView: View {
                 }
                 .padding(EdgeInsets(top: 5, leading: 16, bottom: 16, trailing: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .navigationTitle("Wishlists")
+            }.navigationTitle("Wishlists")
         }
     }
 }
 
-#Preview {
-    WishlistView()
-}

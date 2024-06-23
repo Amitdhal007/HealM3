@@ -8,32 +8,29 @@
 import SwiftUI
 
 struct PasswordView: View {
-    
     @StateObject private var viewModel = SignInEmailViewModel.shared
-    
-    
+
     func isButtonDisabled() -> Bool {
         return viewModel.password.isEmpty || viewModel.confirmPassword.isEmpty || viewModel.password.count < 8 || viewModel.confirmPassword.count < 8 || viewModel.password != viewModel.confirmPassword
     }
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .center, spacing: 24) {
-                    
                     Spacer()
-                    
+
                     Image(systemName: "music.note.list")
                         .font(.system(size: 160))
                         .foregroundColor(.orange1)
-                    
+
                     Spacer()
-                    
+
                     VStack(spacing: 12) {
                         TxtField(text: $viewModel.password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
                         TxtField(text: $viewModel.confirmPassword, placeholder: "Confirm password", cornerRadius: 15, isSecure: true)
                     }
-                    
+
                     VStack {
                         Button(action: {
                             viewModel.signIn { result in
@@ -49,7 +46,6 @@ struct PasswordView: View {
                         }
                         .disabled(isButtonDisabled())
                         .opacity(isButtonDisabled() ? 0.5 : 1)
-                        
                     }
                 }
                 .padding(EdgeInsets(top: 24, leading: 16, bottom: 16, trailing: 16))
@@ -64,5 +60,4 @@ struct PasswordView: View {
         }
     }
 }
-
 

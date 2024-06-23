@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var appState: AppState
+    @StateObject private var viewModel: ProfileViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ProfileViewModel(appState: AppState()))
+    }
+    
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .center, spacing: 12) {
-//                    Image("profile-1")
-//                        .resizable()
-//                        .frame(width: 100, height: 100)
-//                        .padding(.top, 20)
-                    
                     Text("AK")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -37,7 +40,6 @@ struct ProfileView: View {
                     .padding(.top, 30)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    
                     VStack(spacing: 12) {
                         DetaliLabel(text: "hey@amitkum")
                         DetaliLabel(text: "hey.amit0162@gmail.com")
@@ -45,9 +47,14 @@ struct ProfileView: View {
                     }
                     
                     Button(action: {
-                        
-                    })
-                    {
+                        Task {
+                            do {
+                                try viewModel.signOut()
+                            } catch {
+                                print("Failed to sign out")
+                            }
+                        }
+                    }) {
                         NavLink(text: "Sign Out", cornerRadius: 15)
                     }
                     .padding(.top, 20)
@@ -61,4 +68,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(AppState())
 }
