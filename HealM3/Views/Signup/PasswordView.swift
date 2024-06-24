@@ -33,7 +33,7 @@ struct PasswordView: View {
 
                     VStack {
                         Button(action: {
-                            viewModel.signIn { result in
+                            viewModel.signUp { result in
                                 switch result {
                                 case .success(let userData):
                                     print("Sign-up successful: \(userData)")

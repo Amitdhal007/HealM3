@@ -10,9 +10,10 @@ import SwiftUI
 struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @StateObject private var viewModel = SignInEmailViewModel.shared
     
     func isButtonDisabled() -> Bool {
-        return (email.isEmpty || !email.contains("gmail.com")) || password.count < 8
+        return (viewModel.email.isEmpty || !viewModel.email.contains("gmail.com")) || viewModel.password.count < 8
     }
     
     var body: some View {
@@ -26,7 +27,7 @@ struct LoginView: View {
                     .foregroundColor(.orange1)
                 
                 Spacer()
-
+                
                 VStack(alignment:.leading){
                     Text("Welcome,")
                         .font(.largeTitle)
@@ -41,13 +42,20 @@ struct LoginView: View {
                 
                 
                 VStack(spacing: 12) {
-                    TxtField(text: $email, placeholder: "Enter E-mail", cornerRadius: 15, inputType: .email)
-                    TxtField(text: $password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
+                    TxtField(text: $viewModel.email, placeholder: "Enter E-mail", cornerRadius: 15, inputType: .email)
+                    TxtField(text: $viewModel.password, placeholder: "Enter password", cornerRadius: 15, isSecure: true)
                 }
                 
                 VStack {
                     Button(action: {
-                        // action
+                        viewModel.login { result in
+                            switch result {
+                            case .success(let userData):
+                                print("Login successful: \(userData)")
+                            case .failure(let error):
+                                print("Login error: \(error)")
+                            }
+                        }
                     }) {
                         NavLink(text: "Login", cornerRadius: 15)
                     }

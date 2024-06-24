@@ -13,6 +13,8 @@ class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = false
 }
 
+
+
 final class AuthenticationManager {
     
     static let shared = AuthenticationManager()
@@ -53,7 +55,20 @@ final class AuthenticationManager {
             self.appState?.isAuthenticated = false
         }
     }
+    
+    func signIn(email: String, password: String) async throws -> AuthDataResponseModel {
+        let authDataResponse = try await Auth.auth().signIn(withEmail: email, password: password)
+        
+        //update app state
+        DispatchQueue.main.async {
+            self.appState?.isAuthenticated = true
+        }
+        
+        return AuthDataResponseModel(user: authDataResponse.user)
+    }
 }
+
+
 
 class FirebaseManager {
     static let shared = FirebaseManager()
@@ -74,6 +89,8 @@ class FirebaseManager {
     }
 }
 
+
+
 @MainActor
 final class ProfileViewModel: ObservableObject {
     private let appState: AppState
@@ -88,3 +105,10 @@ final class ProfileViewModel: ObservableObject {
     }
 }
 
+
+final class GetProfileDetailsManager {
+    
+    func getProfileDetails() {
+        
+    }
+}
