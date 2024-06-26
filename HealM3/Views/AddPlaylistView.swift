@@ -9,8 +9,9 @@ import SwiftUI
 
 struct AddPlaylistView: View {
     
-    @State private var wishlistName: String = ""
+    @State private var playlistName: String = ""
     @Environment(\.presentationMode) var presentationMode
+    var onAdd: (String) -> Void
     
     var body: some View {
         NavigationView {
@@ -27,7 +28,7 @@ struct AddPlaylistView: View {
                     Spacer()
                     
                     VStack {
-                        TxtField(text: $wishlistName, placeholder: "Enter wishlist name", cornerRadius: 15, inputType: .email)
+                        TxtField(text: $playlistName, placeholder: "Enter Playlist name", cornerRadius: 15, inputType: .email)
                     }
                 }
                 .padding(EdgeInsets(top: 5, leading: 16, bottom: 16, trailing: 16))
@@ -41,7 +42,8 @@ struct AddPlaylistView: View {
                 Text("Cancel")
                     .foregroundStyle(.orange1)
             }, trailing: Button(action: {
-                //
+                onAdd(playlistName)
+                presentationMode.wrappedValue.dismiss()
             }){
                 Text("Done")
                     .foregroundStyle(.orange1)
@@ -51,8 +53,4 @@ struct AddPlaylistView: View {
         }
         
     }
-}
-
-#Preview {
-    AddPlaylistView()
 }

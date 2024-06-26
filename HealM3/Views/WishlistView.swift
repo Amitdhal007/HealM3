@@ -25,7 +25,7 @@ struct WishlistView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: [GridItem(.fixed(150))], spacing: 16) {
                             ForEach(0..<4) { _ in
-                                AlbumCard()
+                                AlbumCard(name: "Akshay's Playlists")
                             }
                         }
                     }

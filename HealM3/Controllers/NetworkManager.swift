@@ -66,6 +66,14 @@ final class AuthenticationManager {
         
         return AuthDataResponseModel(user: authDataResponse.user)
     }
+    
+    func fetchUserProfileData(completion: @escaping(Result<userProfile, Error>) -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            return completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No Authenticate User found"])))
+        }
+        
+        firebaseManager.fetchUserData(userID: user.uid, completion: completion)
+    }
 }
 
 
@@ -87,16 +95,77 @@ class FirebaseManager {
         
         ref.child("users").child(userId).setValue(userData)
     }
+    
+    func fetchUserData(userID: String, completion: @escaping(Result<userProfile, Error>) -> Void ) {
+        ref.child("users").child(userID).observeSingleEvent(of: .value) { snapshot in
+            guard let value = snapshot.value as? [String: Any] else {
+                return completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User data not found"])))
+            }
+            
+            let name = value["name"] as? String ?? ""
+            let email = value["email"] as? String ?? ""
+            let mobileNum = value["mobileNum"] as? String ?? ""
+            
+            let userProfile = userProfile(userName: name, userEmail: email, userMobNum: mobileNum)
+            completion(.success(userProfile))
+        }
+    withCancel: { error in
+        completion(.failure(error))
+    }
+    }
+    
+    func fetchPlaylist(userId: String, completion: @escaping ([Playlist]) -> Void) {
+        ref.child("users").child(userId).child("playlists").observeSingleEvent(of: .value) { snapshot in
+            var playlists: [Playlist] = []
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let dict = childSnapshot.value as? [String: Any],
+                   let name = dict["name"] as? String {
+                    let playlist = Playlist(id: childSnapshot.key, name: name)
+                    playlists.append(playlist)
+                }
+            }
+            completion(playlists)
+        }
+    }
+    
+    func writePlaylist(userId: String, playlistName: String) {
+        let playlistData: [String: Any] = [
+            "name": playlistName
+        ]
+        
+        ref.child("users").child(userId).child("playlists").childByAutoId().setValue(playlistData)
+    }
+    
 }
 
 
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
+    @Published var userProfile: userProfile?
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    
     private let appState: AppState
     
     init(appState: AppState) {
         self.appState = appState
+    }
+    
+    func fetchUserProfile() {
+        isLoading = true
+        AuthenticationManager.shared.fetchUserProfileData { result in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                switch result {
+                case .success(let userProfile):
+                    self.userProfile = userProfile
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
     }
     
     func signOut() throws {
@@ -105,10 +174,3 @@ final class ProfileViewModel: ObservableObject {
     }
 }
 
-
-final class GetProfileDetailsManager {
-    
-    func getProfileDetails() {
-        
-    }
-}

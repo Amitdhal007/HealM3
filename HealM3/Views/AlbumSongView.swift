@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AlbumSongView: View {
     
+    var playlist: Playlist
     @State private var searchText: String = ""
     @Environment(\.presentationMode) var presentationMode
     @State private var isSongAddedPresent: Bool = false
@@ -34,7 +35,7 @@ struct AlbumSongView: View {
                 .padding(EdgeInsets(top: 5, leading: 16, bottom: 16, trailing: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .navigationTitle("Akshay's Playlist")
+            .navigationTitle(playlist.name)
             .searchable(text: $searchText, prompt: "Search Song")
             .navigationBarItems(trailing: Button(action: {
                 isSongAddedPresent = true
@@ -54,6 +55,3 @@ struct AlbumSongView: View {
     }
 }
 
-#Preview {
-    AlbumSongView()
-}
