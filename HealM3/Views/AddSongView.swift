@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct AddSongView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @State private var songName: String = ""
     @State private var songSinger: String = ""
+    @State private var songData: Data?
+    @State private var showingDocumentPicker = false
+    var onAddSong: (String, String, String) -> Void
     
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack{
-                    
+                VStack {
                     Spacer()
                     
                     Image(systemName: "music.note.list")
@@ -34,9 +37,8 @@ struct AddSongView: View {
                     
                     VStack(spacing: 14) {
                         Button(action: {
-                            
-                        })
-                        {
+                            showingDocumentPicker = true
+                        }) {
                             Image(systemName: "arrow.up.doc")
                                 .font(.system(size: 60))
                                 .foregroundColor(.orange1)
@@ -56,21 +58,42 @@ struct AddSongView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
-            }){
+            }) {
                 Text("Cancel")
                     .foregroundStyle(.orange1)
             }, trailing: Button(action: {
-                //
-            }){
+                uploadSong()
+            }) {
                 Text("Done")
                     .foregroundStyle(.orange1)
                     .fontWeight(.bold)
             })
             .background(.black)
+            .sheet(isPresented: $showingDocumentPicker) {
+                DocumentPickerWrapper { urls in
+                    guard let url = urls.first else { return }
+                    do {
+                        self.songData = try Data(contentsOf: url)
+                    } catch {
+                        print("Failed to load song data: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+    
+    private func uploadSong() {
+        guard let userId = Auth.auth().currentUser?.uid, let songData = songData else { return }
+        FirebaseManager.shared.uploadSong(userId: userId, songData: songData) { result in
+            switch result {
+            case .success(let songURL):
+                onAddSong(songName, songSinger, songURL)
+                presentationMode.wrappedValue.dismiss()
+            case .failure(let error):
+                print("Failed to upload song: \(error.localizedDescription)")
+            }
         }
     }
 }
 
-#Preview {
-    AddSongView()
-}
+

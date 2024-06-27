@@ -46,6 +46,7 @@
 		7E494F632C2627BA00348190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E494F622C2627BA00348190 /* GoogleService-Info.plist */; };
 		7E494F672C26A94100348190 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F662C26A94000348190 /* RootView.swift */; };
 		7E494F6F2C29642200348190 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F6E2C29642200348190 /* DataModels.swift */; };
+		7E494F712C2C49F000348190 /* DocumentPickerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E494F702C2C49F000348190 /* DocumentPickerWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		7E494F622C2627BA00348190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7E494F662C26A94000348190 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7E494F6E2C29642200348190 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		7E494F702C2C49F000348190 /* DocumentPickerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				7E494F202C2088BC00348190 /* BackgroundColor.swift */,
+				7E494F702C2C49F000348190 /* DocumentPickerWrapper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				7E494F5C2C25F34B00348190 /* NetworkManager.swift in Sources */,
 				7E494F252C208C5E00348190 /* inputTypes.swift in Sources */,
 				7E494F352C21A35300348190 /* WishlistView.swift in Sources */,
+				7E494F712C2C49F000348190 /* DocumentPickerWrapper.swift in Sources */,
 				7E494F312C21845E00348190 /* AlbumCard.swift in Sources */,
 				7E494F412C2576A600348190 /* EachSongView.swift in Sources */,
 				7E494F332C21918E00348190 /* TabBarView.swift in Sources */,

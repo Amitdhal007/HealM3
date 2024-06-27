@@ -39,7 +39,7 @@ struct WishlistView: View {
                     
                     LazyVGrid(columns: columns, spacing: 13) {
                         ForEach(0..<4) { _ in
-                            MusicCard()
+                            MusicCard(songName: "Tum hi ho", songSinger: "Arijit Singh")
                         }
                     }
                     .padding(.top, 10)

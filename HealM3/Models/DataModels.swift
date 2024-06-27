@@ -18,3 +18,10 @@ struct Playlist: Identifiable {
     var id: String
     var name: String
 }
+
+struct Song: Identifiable {
+    var id: String
+    var name: String
+    var singer: String
+    var url: String
+}

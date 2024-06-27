@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseStorage
 
 class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = false
@@ -81,9 +82,11 @@ final class AuthenticationManager {
 class FirebaseManager {
     static let shared = FirebaseManager()
     private let ref: DatabaseReference
+    private let storageRef: StorageReference
     
     private init() {
         self.ref = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
     }
     
     func writeUserData(userId: String, name: String, email: String, mobileNum: String) {
@@ -137,7 +140,70 @@ class FirebaseManager {
         ref.child("users").child(userId).child("playlists").childByAutoId().setValue(playlistData)
     }
     
+    func addSongToPlaylist(userId: String, playlistId: String, songName: String, songSinger: String, songURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let songData: [String: Any] = [
+            "name": songName,
+            "singer": songSinger,
+            "url": songURL
+        ]
+        
+        ref.child("users").child(userId).child("playlists").child(playlistId).child("songs").childByAutoId().setValue(songData) { error, _ in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func fetchSongs(userId: String, playlistId: String, completion: @escaping ([Song], Error?) -> Void) {
+        ref.child("users").child(userId).child("playlists").child(playlistId).child("songs").observeSingleEvent(of: .value) { snapshot in
+            var songs: [Song] = []
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let dict = childSnapshot.value as? [String: Any],
+                   let name = dict["name"] as? String,
+                   let singer = dict["singer"] as? String,
+                   let url = dict["url"] as? String {
+                    let song = Song(id: childSnapshot.key, name: name, singer: singer, url: url)
+                    songs.append(song)
+                }
+            }
+            completion(songs, nil)
+        } withCancel: { error in
+            completion([], error)
+        }
+    }
+    
+    func uploadSong(userId: String, songData: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        let songRef = storageRef.child("users").child(userId).child("songs").child(UUID().uuidString + ".mp3")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "audio/mpeg"
+        
+        songRef.putData(songData, metadata: metadata) { (metadata, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            songRef.downloadURL { (url, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let downloadURL = url else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get download URL"])))
+                    return
+                }
+                
+                completion(.success(downloadURL.absoluteString))
+            }
+        }
+    }
 }
+
 
 
 

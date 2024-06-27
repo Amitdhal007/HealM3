@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct MusicCard: View {
+    
+    var songName: String
+    var songSinger: String
+    
     var body: some View {
         HStack {
             Image(systemName: "music.note")
@@ -15,8 +19,8 @@ struct MusicCard: View {
                 .foregroundColor(.orange1)
             
             VStack(alignment: .leading) {
-                Text("Tum Hi Ho")
-                Text("Song. Arijit Singh")
+                Text(songName)
+                Text("Song. \(songSinger)")
                     .foregroundStyle(.gray)
             }
             .padding(.leading, 15)
@@ -38,6 +42,3 @@ struct MusicCard: View {
     }
 }
 
-#Preview {
-    MusicCard()
-}
